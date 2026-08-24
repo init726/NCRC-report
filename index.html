@@ -30,6 +30,7 @@
       <nav aria-label="학습 회차 선택">
         <button class="active" data-round="1">1회차</button>
         <button data-round="2">2회차</button>
+        <button data-round="3">3회차</button>
       </nav>
     </div>
   </header>
@@ -38,7 +39,11 @@
     <div id="empty" class="empty"><div><strong>2회차 리포트 준비 중</strong>2회차 HTML을 추가하면 이곳에 표시됩니다.</div></div>
   </main>
   <script>
-    const reports = { 1: 'reports/round-1.html', 2: 'reports/round-2.html' };
+    const reports = {
+      1: 'reports/round-1.html',
+      2: 'reports/round-2.html',
+      3: 'reports/round-3.html'
+    };
     const frame = document.querySelector('#report');
     const empty = document.querySelector('#empty');
     const status = document.querySelector('#status');
