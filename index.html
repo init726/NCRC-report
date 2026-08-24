@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCRC 학습 리포트</title>
+  <style>
+    :root { color-scheme: light; --ink:#17202a; --muted:#68727d; --line:#e5e9ee; --accent:#2563eb; --bg:#f4f6f8; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:system-ui,"Apple SD Gothic Neo",sans-serif; }
+    header { position:sticky; top:0; z-index:10; background:#fff; border-bottom:1px solid var(--line); }
+    .top { max-width:1180px; margin:auto; min-height:72px; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    h1 { margin:0; font-size:20px; letter-spacing:-.02em; }
+    .sub { margin-top:3px; color:var(--muted); font-size:12px; }
+    nav { display:flex; gap:8px; }
+    button { border:1px solid var(--line); border-radius:9px; background:#fff; color:#4b5563; padding:9px 15px; font-weight:650; cursor:pointer; }
+    button:hover { border-color:#b9c4d0; }
+    button.active { border-color:var(--accent); background:var(--accent); color:#fff; }
+    main { max-width:1180px; margin:22px auto; padding:0 20px; }
+    .frame { width:100%; min-height:1200px; border:1px solid var(--line); border-radius:14px; background:#fff; box-shadow:0 8px 25px #18212b0b; }
+    .empty { min-height:420px; border:1px solid var(--line); border-radius:14px; background:#fff; display:none; place-items:center; text-align:center; color:var(--muted); }
+    .empty strong { display:block; color:var(--ink); font-size:20px; margin-bottom:8px; }
+    @media (max-width:640px) { .top { align-items:flex-start; flex-direction:column; } main { margin-top:14px; padding:0 10px; } .frame { border-radius:10px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top">
+      <div><h1>NCRC 학습 리포트</h1><div class="sub" id="status">1회차 학습 결과</div></div>
+      <nav aria-label="학습 회차 선택">
+        <button class="active" data-round="1">1회차</button>
+        <button data-round="2">2회차</button>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <iframe id="report" class="frame" src="reports/round-1.html" title="1회차 학습 리포트"></iframe>
+    <div id="empty" class="empty"><div><strong>2회차 리포트 준비 중</strong>2회차 HTML을 추가하면 이곳에 표시됩니다.</div></div>
+  </main>
+  <script>
+    const reports = { 1: 'reports/round-1.html', 2: 'reports/round-2.html' };
+    const frame = document.querySelector('#report');
+    const empty = document.querySelector('#empty');
+    const status = document.querySelector('#status');
+
+    document.querySelectorAll('[data-round]').forEach(button => {
+      button.addEventListener('click', () => {
+        const round = button.dataset.round;
+        document.querySelectorAll('[data-round]').forEach(item => item.classList.toggle('active', item === button));
+        status.textContent = `${round}회차 학습 결과`;
+        frame.title = `${round}회차 학습 리포트`;
+        if (reports[round]) {
+          frame.src = reports[round];
+          frame.style.display = 'block';
+          empty.style.display = 'none';
+        } else {
+          frame.style.display = 'none';
+          empty.style.display = 'grid';
+          empty.querySelector('strong').textContent = `${round}회차 리포트 준비 중`;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
